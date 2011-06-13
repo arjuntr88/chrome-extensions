@@ -1,0 +1,27 @@
+{
+  "name" : "Page action by content",
+  "version" : "1.0",
+  "description" : "Shows a page action for HTML pages containing the word 'sandwich'",
+  "background_page" : "background.html",
+  "page_action" :
+  {
+    "default_icon" : "sandwich-19.png",
+    "default_title" : "Hudson b&r extension"
+  },
+  "content_scripts" : [
+    {
+      "matches" : [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js" : ["contentscript.js"],
+      "run_at" : "document_end",
+      "all_frames" : false
+    }
+  ],
+  "icons" : {
+    "48" : "sandwich-19.png",
+    "128" : "sandwich-128.png"
+  },
+  "permissions": ["tabs", "notifications", "http://*/*", "https://*/*","idle"]
+}
