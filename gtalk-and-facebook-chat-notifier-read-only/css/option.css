@@ -1,0 +1,122 @@
+/**
+ * Copyright (c) 2010 Aurélien Chabot
+ * Licensed under the GNU General Public License v3, read LICENSE
+ *
+ * This file is part of Gtalk & Facebook Chat Extension.
+ *
+ * "Gtalk & Facebook Chat Extension" is free software: you can redistribute
+ * it and/or modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * "Gtalk & Facebook Chat Extension" is distributed in the hope that it
+ * will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with "Gtalk & Facebook Chat Extention".
+ * If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/** Style file for the option */
+
+
+body {
+	font-family:helvetica, arial, sans-serif;
+	font-size:80%;
+	margin:0 auto;
+}
+
+
+#wrapper{
+	width: 800px;
+	margin:0 auto;
+}
+
+h1 {
+	display: block;
+	font-size: 170%;
+}
+
+h2 {
+	display: inline;
+	font-size: 150%;
+	border-bottom: 2px solid #4E7E7C;
+}
+
+h3 {
+	text-align: left;
+	border-bottom: 2px solid #bbb;
+}
+
+
+img {
+	float: left;
+	margin: 1em;
+}
+
+#wrap{
+	margin: 1em auto;
+}
+
+
+#header {
+	margin: 15px auto;
+	text-align: center;
+	width: 70%;
+}
+
+#status {
+	color: #FF0000;
+	font-weight: bold;
+	text-align:center;
+	margin: 5px auto;
+}
+
+#options, #about  {
+	border: 1px solid #ABC;
+	border-radius: 10px 10px;
+	margin: 15px auto;
+	padding: 10px;
+	text-align: center;
+}
+
+#options {
+	width: 400px;
+}
+
+.option {
+	text-align: left;
+	padding: 10px 20%;
+}
+
+#footer {
+  margin-top:3em;
+  width: 100%;
+  text-align:center;
+}
+
+#footer button{
+	font-weight:bold;
+}
+
+#about  {
+	width: 290px;
+}
+
+#facebook {
+	border:none;
+	overflow:hidden;
+	width:100px;
+	height:21px;
+	vertical-align: middle;
+}
+
+#timeoutValue {
+	text-align:right;
+}
+
+.grey {
+	color: #BFBFBF;
+}

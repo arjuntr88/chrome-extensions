@@ -1,0 +1,60 @@
+{
+	"extName": {
+		"message": "GTalk and Facebook Chat Notifier ( Unofficial )",
+		"description": "Extention Name"
+	},
+	"appDesc": {
+		"message": "This extension adds desktop notification for chat messages received from gtalk ( from your gmail page ) and Facebook",
+		"description": "Extention description"
+	},
+	"gtalkNotificationTitle": {
+		"message": "Gtalk Notification",
+		"description": "Notification Name"
+	},
+	"facebookNotificationTitle": {
+		"message": "Facebook Notification",
+		"description": "Notification Name"
+	},
+	"textNotification": {
+		"message": "New message from"
+	},
+	"textNotificationNew": {
+		"message": "New conversation with"
+	},
+	"save": {
+		"message": "Save"
+	},
+	"cancel": {
+		"message": "Cancel"
+	},
+	"timeoutDes": {
+		"message": "Hide the notification after a timeout"
+	},
+	"timeoutValue": {
+		"message": "Timeout value"
+	},
+	"saved": {
+		"message": "Options Saved"
+	},
+	"homePage": {
+		"message": "Home page"
+	},
+	"bug": {
+		"message": "Report a bug"
+	},
+	"activateFacebook": {
+		"message": "Activate the extension on Facebook"
+	},
+	"activateGtalk": {
+		"message": "Activate the extension on Gtalk"
+	},
+	"options": {
+		"message": "Options"
+	},
+	"activation": {
+		"message": "Activation"
+	},
+	"timeout": {
+		"message": "Timer"
+	}
+}

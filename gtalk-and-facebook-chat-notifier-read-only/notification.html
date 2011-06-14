@@ -1,0 +1,44 @@
+<!--
+/**
+ * Copyright (c) 2010 Aurélien Chabot
+ * Licensed under the GNU General Public License v3, read LICENSE
+ *
+ * This file is part of Gtalk & Facebook Chat Extension.
+ *
+ * "Gtalk & Facebook Chat Extension" is free software: you can redistribute
+ * it and/or modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * "Gtalk & Facebook Chat Extension" is distributed in the hope that it
+ * will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with "Gtalk & Facebook Chat Extention".
+ * If not, see <http://www.gnu.org/licenses/>.
+ */
+  -->
+<!DOCTYPE html >
+<html lang="fr">
+	<head>
+		<title>Gtalk Notification</title>
+		<meta charset="UTF-8" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="css/notification.css" type="text/css" media="screen" />
+		<script type="text/javascript">
+			jQuery(function($){
+				$('.notification .info').text(name + ' says ' + message);
+			});
+		</script>
+	</head>
+	<body>
+	<div class="notification">
+		<img src="icons/gtalk.png" width="30px" title="Gtalk Notifier" />
+		<div class="info">
+
+		</div>
+	</div>
+	</body>
+</html>

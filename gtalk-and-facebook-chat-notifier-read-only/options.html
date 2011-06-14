@@ -1,0 +1,119 @@
+<!--
+/**
+ * Copyright (c) 2010 Aurélien Chabot
+ * Licensed under the GNU General Public License v3, read LICENSE
+ *
+ * This file is part of Gtalk & Facebook Chat Extension.
+ *
+ * "Gtalk & Facebook Chat Extension" is free software: you can redistribute
+ * it and/or modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * "Gtalk & Facebook Chat Extension" is distributed in the hope that it
+ * will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with "Gtalk & Facebook Chat Extention".
+ * If not, see <http://www.gnu.org/licenses/>.
+ */
+  -->
+<!DOCTYPE html >
+<html lang="en">
+	<head>
+		<title>GTalk and Facebook Chat Notifier ( Unofficial ) - Options</title>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" href="css/option.css" type="text/css" media="screen" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+		<script src="js/common.js" type="text/javascript"></script>
+		<script src="js/log.js" type="text/javascript"></script>
+		<script src="js/option.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			jQuery(document).ready(function() {
+				$('#header h1').text( chrome.i18n.getMessage('extName') );
+				$('#header h2').text( chrome.i18n.getMessage('options') );
+				$('h3.activationTitle').text( chrome.i18n.getMessage('activation') );
+				$('h3.timeoutTitle').text( chrome.i18n.getMessage('timeout') );
+				$('#save-button').text( chrome.i18n.getMessage('save') );
+				$('#cancel-button').text( chrome.i18n.getMessage('cancel') );
+				$('#timeoutLabel').text( chrome.i18n.getMessage('timeoutDes') );
+				$('#timeoutValueLabel').text( chrome.i18n.getMessage('timeoutValue') );
+				$('#homePage').text( chrome.i18n.getMessage('homePage') );
+				$('#bug').text( chrome.i18n.getMessage('bug') );
+				$('#activateFacebookLabel').text( chrome.i18n.getMessage('activateFacebook') );
+				$('#activateGtalkLabel').text( chrome.i18n.getMessage('activateGtalk') );
+			});
+			console.log( chrome.i18n.getMessage("extName") + ' Option page' );
+		</script>
+	</head>
+
+	<body>
+		<div id="wrapper">
+			<a href="https://chrome.google.com/webstore/detail/ggbdjhbnkkfjhimpnafhidbnbdkpfdjm">
+				<img src="icons/icon_128.png" width="120px" title="Gtalk and Facebook Chat Notifier" />
+			</a>
+
+			<div id="wrap">
+
+				<div id="header">
+					<h1></h1>
+					<h2></h2>
+				</div>
+
+				<div id="options">
+
+					<div id="status"></div>
+
+					<h3 class="activationTitle"></h3>
+
+					<div class="activate option">
+						<input type="checkbox" name="activateGtalk" id="activateGtalk" />
+						<label for="activateGtalk" id="activateGtalkLabel"></label>
+
+						<br />
+
+						<input type="checkbox" name="activateFacebook" id="activateFacebook" />
+						<label for="activateFacebook" id="activateFacebookLabel"></label>
+					</div>
+
+					<h3 class="timeoutTitle"></h3>
+
+					<div class="timeout option">
+						<input type="checkbox" name="timeout" id="timeout" />
+						<label for="timeout" id="timeoutLabel"></label>
+
+						<br />
+
+						<div class="timeOutBlock">
+							<label for="timeoutValue" id="timeoutValueLabel"></label>
+							<input type="text" name="timeoutValue" id="timeoutValue" size="1" />
+							<span class="timeoutValueUnit">s</span>
+						</div>
+					</div>
+
+					<div id="footer">
+						<button id="save-button"></button>
+						<button id="cancel-button"></button>
+					</div>
+
+				</div>
+
+				<div id="about">
+					<p>
+						<a href="http://code.google.com/p/gtalk-and-facebook-chat-notifier/" id="homePage" ></a> |
+						<a href="http://code.google.com/p/gtalk-and-facebook-chat-notifier/issues/list" id="bug" ></a> |
+						<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com%2Fpages%2FGTalk-and-Face-book-Chat-Notifier-for-Google-Chrome%2F173707175983752&amp;layout=button_count&amp;show_faces=true&amp;width=100&amp;action=like&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" id="facebook" allowTransparency="true"></iframe>
+						<!--<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script><fb:like href="http://www.facebook.com/pages/GTalk-and-Face-book-Chat-Notifier-for-Google-Chrome/173707175983752" layout="button_count" show_faces="true" width="100"></fb:like>-->
+					</p>
+
+					<p>&copy; 2010 Aurélien Chabot</p>
+				</div>
+
+			</div>
+		</div>
+	</body>
+
+</html>

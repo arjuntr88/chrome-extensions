@@ -1,0 +1,56 @@
+{
+	"extName": {
+		"message": "GTalk et Facebook Chat Notificateur ( Non Officiel )",
+		"description": "Extention Name"
+	},
+	"appDesc": {
+		"message": "Cette extention ajoute des notifications sur votre bureau pour les nouveaux messages sur les méssageries instantanée google talk ( de votre page gmail ) et facebook",
+		"description": "Extention description"
+	},
+	"notificationName": {
+		"message": "Gtalk Notification",
+		"description": "Notification Name"
+	},
+	"textNotification": {
+		"message": "Nouveau message de"
+	},
+	"textNotificationNew": {
+		"message": "Nouvelle conversation avec"
+	},
+	"save": {
+		"message": "Sauvegarder"
+	},
+	"cancel": {
+		"message": "Annuler"
+	},
+	"timeoutDes": {
+		"message": "Masquer la notification après un certain temps"
+	},
+	"timeoutValue": {
+		"message": "Masquer la notification après"
+	},
+	"saved": {
+		"message": "Options Sauvegardés"
+	},
+	"homePage": {
+		"message": "Page du projet"
+	},
+	"bug": {
+		"message": "Signaler un bug"
+	},
+	"activateFacebook": {
+		"message": "Activer l'extension sur Facebook"
+	},
+	"activateGtalk": {
+		"message": "Activer l'extension sur Gtalk"
+	},
+	"options": {
+		"message": "Options"
+	},
+	"activation": {
+		"message": "Activation"
+	},
+	"timeout": {
+		"message": "Temps"
+	}
+}

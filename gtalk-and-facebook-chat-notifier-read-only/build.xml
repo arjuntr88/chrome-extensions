@@ -1,0 +1,13 @@
+<project name="svn" default="del" basedir=".">
+
+
+
+<target name="del" >
+  <delete includeemptydirs="true" >
+    <fileset dir="." includes="**\*.svn\" defaultexcludes="no" />
+  </delete>
+</target>
+
+
+  
+</project>
