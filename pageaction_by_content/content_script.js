@@ -8,7 +8,9 @@ function testForBuild()
 {
 	var spinner=document.getElementById('spinner');
 	var tmp=document.getElementById("out");
-	if(spinner==null)
+	
+	//spinner==null
+	if($('#spinner').length == 0)
 	{
 		return true;
 	}
@@ -43,7 +45,7 @@ function test()
 		chrome.extension.sendRequest(request);
 	  } 
 else{	  
-	  setTimeout("location.reload(true)",10000);
+	  setTimeout("test()",1000);
 		console.log("building");
 	  
 	 } //chrome.extension.sendRequest({}, function(response) {});

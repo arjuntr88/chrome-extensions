@@ -14,8 +14,8 @@
         "http://*/*",
         "https://*/*"
       ],
-      "js" : ["contentscript.js"],
-      "run_at" : "document_end",
+      "js" : ["jquery.min.js","contentscript.js"],
+      "run_at" : "document_idle",
       "all_frames" : false
     }
   ],
