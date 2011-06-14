@@ -42,6 +42,7 @@ function test()
 		//alert("Build Finished");
 		request=true;
 		console.log("building done");
+		
 		chrome.extension.sendRequest(request);
 	  } 
 else{	  
@@ -51,3 +52,4 @@ else{
 	 } //chrome.extension.sendRequest({}, function(response) {});
 	
 }
+
