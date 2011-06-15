@@ -15,6 +15,7 @@
 	var buildFin;
 	var url;
 	var buildStarted;
+	var job;
       // Called when a message is passed.  We assume that the content script
       // wants to show the page action.
       function onRequest(request, sender, sendResponse) {
@@ -23,11 +24,12 @@
         
 		//alert(getUrl(sender.tab.url));
 		chrome.pageAction.show(sender.tab.id);
-		chrome.pageAction.setIcon({path:"B&R.png",tabId:sender.tab.id});
+		chrome.pageAction.setIcon({path:"DA.png",tabId:sender.tab.id});
         
 		
 		if(cons.test(sender.tab.url)){
 		request1=null
+		job=null;
 		//console.log("sender.tab.url "+ sender.tab.url);
 		url=sender.tab.url;
 		buildStarted=0;
@@ -66,12 +68,12 @@
 		//console.log("req==true");
 		//console.log("testbuild req=true");
 		
-		var notification = webkitNotifications.createNotification('B&R.png', 'success','Build Successfull');
+		var notification = webkitNotifications.createNotification('DA.png', 'success','Build Successfull, Job :'+ job);
 		notification.show();
 		}
 		if(request1=="failure")
 		{
-		var notification = webkitNotifications.createNotification('B&R.png', 'failure','Build Failed');
+		var notification = webkitNotifications.createNotification('DA.png', 'failure','Build Failed, Job :' + job);
 		notification.show();
 		}
 		
@@ -80,7 +82,7 @@
 		if(buildStarted<1)
 		{
 		//console.log("testbuild req=building");
-		var notification = webkitNotifications.createNotification('B&R.png', 'Building','Build Started');
+		var notification = webkitNotifications.createNotification('DA.png', 'Building','Build Started, Job :' + job);
 		notification.show();
 		buildStarted++;
 		}
@@ -149,6 +151,7 @@ function checkResponse() {
 				
 				}
 				//console.log("chkresponse");
+				job=response.fullDisplayName;
 				setTimeout("testBuild()",1000);
 			return;
 
