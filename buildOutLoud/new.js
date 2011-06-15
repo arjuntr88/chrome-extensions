@@ -78,3 +78,13 @@ function checkResponse() {
 					return;
 				} */
 			}		
+			
+			
+			/* 	  function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e15; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+} */
