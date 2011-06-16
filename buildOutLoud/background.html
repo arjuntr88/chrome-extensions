@@ -17,6 +17,8 @@ var url;
 var buildStarted;
 var job;
 var rootUrl;
+var activJobs = [];
+var activJobCount = 0;
 // Called when a message is passed.  We assume that the content script
 // wants to show the page action.
 function onRequest(request, sender, sendResponse) {
@@ -40,7 +42,10 @@ function onRequest(request, sender, sendResponse) {
 		testBuild();
 	}
 	rootUrl=sender.tab.url; //rootUrl variable to store url of the tab
+	activJobs = [];			// re initialize on every reload
+	activJobCount = 0;
 	testRoot();	//check whether it is infact root hudson page
+	
 	sendResponse({});
 }
 
@@ -73,6 +78,10 @@ function testBuild() {
 	}
 	if (request1 == "failure") {
 		var notification = webkitNotifications.createNotification('DA.png', 'failure', 'Build Failed, Job :' + job);
+		notification.show();
+	}
+	if (request1 == "aborted") {
+		var notification = webkitNotifications.createNotification('DA.png', 'aborted', 'Build Aborted, Job :' + job);
 		notification.show();
 	}
 	
@@ -133,8 +142,11 @@ function checkResponse() {
 			//console.log("building");
 			request1 = "building";
 		}
+		else if (!response.building && response.result == "ABORTED") {
+			request1 = "aborted";
+		}
 	} else {}
-	//console.log("chkresponse");
+	console.log("chkresponse");
 	job = response.fullDisplayName;
 	setTimeout("testBuild()", 1000);
 	return;
@@ -142,7 +154,7 @@ function checkResponse() {
 }
 var rootxhr;
 function testRoot() {
-console.log("in testRoot");
+//console.log("in testRoot");
 var auth=null;
 if(rootxhr) {
 rootxhr.abort();
@@ -150,14 +162,14 @@ rootxhr.abort();
 rootxhr = new XMLHttpRequest();
 try {
 		rootxhr.onreadystatechange = rootResponse;
-		//rootxhr.onerror = handleError;
+		rootxhr.onerror = handleError;
 		rootxhr.open('GET', rootUrl + 'api/json', true);
 		if (typeof auth == 'string') {
 			rootxhr.setRequestHeader('Authorization', 'Basic ' + auth);
 		}
-		console.log("test");
+		//console.log("test");
 		rootxhr.send();
-		console.log("rootxhr sent");
+		//console.log("rootxhr sent");
 	} catch (e) {
 	console.log("error");
 	}
@@ -165,7 +177,7 @@ try {
 }
 
 function rootResponse() {
-console.log("in rootResponse");
+//console.log("in rootResponse");
 if(rootxhr.readyState != 4)
 return;
 //console.log(rootxhr.status);
@@ -173,19 +185,95 @@ return;
 if(rootxhr.status == 200 && rootxhr.responseText) {
 var response = JSON.parse(rootxhr.responseText);
 if (response.jobs==null)
-console.log("not root page");
+;
+//console.log("not root page");
 else {
-for(x in response.jobs)
-console.log(response.jobs[x].name);
-return;
+for(x in response.jobs) {
+//console.log(response.jobs[x].name);
+checkForBuilds(response.jobs[x]);
 }
+
+
 }
-else {}
+console.log(activJobCount+": active jobs");
+if (activJobCount>0)
+setTimeout("testRoot()",1000);
+}
+
  
 //setTimeout("rootResponse()",100);
 }
 
+function handleError() {
+console.log("xmlHTTPReq error");
+}
 
+
+function checkForBuilds(job) {
+var active=/anime/;
+//console.log("checking for build :" + job.name);
+if (active.test(job.color)) {
+var abc = checkStartStop(job,true);
+console.log(abc);
+if (abc=="notStarted")
+{
+activJobCount++;
+console.log(job.name + " added to list");
+}
+//console.log(job.name +" is active");
+}
+else{
+if (checkStartStop(job,false)=="stop")
+activJobCount--;
+//console.log(job.name +" is inactive");
+}
+//console.log(activJobCount);
+}
+
+function checkStartStop(job,building) { 
+var rstr;
+if (building) {
+
+console.log(job.name + " is building");
+
+if(activJobs.length>0) {
+for (x in activJobs) {
+console.log(x);
+if (job.name==activJobs[x])
+{
+console.log(job.name +" in list");
+rstr = "Started";
+}
+else {
+console.log(job.name +" now added");
+activJobs.push(job.name);
+rstr = "notStarted";
+}
+}
+}
+else if (activJobs.length == 0)
+{
+console.log(job.name +" now added");
+activJobs.push(job.name);
+rstr = "notStarted";
+}
+}
+else if (!building) {
+console.log(job.name+ "not building");
+for (x in activJobs) {
+console.log(activJobs[x]);
+if (job.name==activJobs[x]) {
+activJobs.splice(x,1);
+rstr = "stop";
+}
+}
+}
+/*for (x in activJobs)
+console.log(x);
+*/
+console.log(rstr);
+return rstr;
+}
 // Listen for the content script to send a message to the background page.
 chrome.extension.onRequest.addListener(onRequest);
      </script>
