@@ -16,13 +16,14 @@ var buildFin;
 var url;
 var buildStarted;
 var job;
+var rootUrl;
 // Called when a message is passed.  We assume that the content script
 // wants to show the page action.
 function onRequest(request, sender, sendResponse) {
 	// Show the page action for the tab that the sender (content script)
 	// was on.
 	
-	//alert(getUrl(sender.tab.url));
+	//alert(sender.tab.url);
 	chrome.pageAction.show(sender.tab.id);
 	chrome.pageAction.setIcon({
 			path : "DA.png",
@@ -38,6 +39,8 @@ function onRequest(request, sender, sendResponse) {
 		buildFin = 0;
 		testBuild();
 	}
+	rootUrl=sender.tab.url; //rootUrl variable to store url of the tab
+	testRoot();	//check whether it is infact root hudson page
 	sendResponse({});
 }
 
@@ -102,6 +105,7 @@ function doRequest() {
 		if (typeof auth == 'string') {
 			xhreq.setRequestHeader('Authorization', 'Basic ' + auth);
 		}
+		
 		xhreq.send();
 	} catch (e) {}
 	
@@ -136,6 +140,51 @@ function checkResponse() {
 	return;
 	
 }
+var rootxhr;
+function testRoot() {
+console.log("in testRoot");
+var auth=null;
+if(rootxhr) {
+rootxhr.abort();
+}
+rootxhr = new XMLHttpRequest();
+try {
+		rootxhr.onreadystatechange = rootResponse;
+		//rootxhr.onerror = handleError;
+		rootxhr.open('GET', rootUrl + 'api/json', true);
+		if (typeof auth == 'string') {
+			rootxhr.setRequestHeader('Authorization', 'Basic ' + auth);
+		}
+		console.log("test");
+		rootxhr.send();
+		console.log("rootxhr sent");
+	} catch (e) {
+	console.log("error");
+	}
+
+}
+
+function rootResponse() {
+console.log("in rootResponse");
+if(rootxhr.readyState != 4)
+return;
+//console.log(rootxhr.status);
+//console.log(rootxhr.responseText);
+if(rootxhr.status == 200 && rootxhr.responseText) {
+var response = JSON.parse(rootxhr.responseText);
+if (response.jobs==null)
+console.log("not root page");
+else {
+for(x in response.jobs)
+console.log(response.jobs[x].name);
+return;
+}
+}
+else {}
+ 
+//setTimeout("rootResponse()",100);
+}
+
 
 // Listen for the content script to send a message to the background page.
 chrome.extension.onRequest.addListener(onRequest);
