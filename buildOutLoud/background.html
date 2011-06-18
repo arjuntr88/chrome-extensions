@@ -32,7 +32,7 @@ function onRequest(request, sender, sendResponse) {
 			tabId : sender.tab.id
 		});
 	
-	if (cons.test(sender.tab.url)) {
+/*	if (cons.test(sender.tab.url)) {
 		request1 = null
 			job = null;
 		//console.log("sender.tab.url "+ sender.tab.url);
@@ -40,15 +40,16 @@ function onRequest(request, sender, sendResponse) {
 		buildStarted = 0;
 		buildFin = 0;
 		testBuild();
-	}
+	}*/
 	rootUrl=sender.tab.url; //rootUrl variable to store url of the tab
-
+	activJobs = [];
+	activJobCount = 0;
 	testRoot();	//check whether it is infact root hudson page
 	
 	sendResponse({});
 }
 
-function getUrl(Url) {
+/*function getUrl(Url) {
 	
 	var pos = Url.lastIndexOf("console");
 	
@@ -150,16 +151,16 @@ function checkResponse() {
 	setTimeout("testBuild()", 1000);
 	return;
 	
-}
+}*/
 var rootxhr;
 function testRoot() {
-//console.log("in testRoot");
-var auth=null;
-if(rootxhr) {
-rootxhr.abort();
-}
-rootxhr = new XMLHttpRequest();
-try {
+	//console.log("in testRoot");
+	var auth = null;
+	if (rootxhr) {
+		rootxhr.abort();
+	}
+	rootxhr = new XMLHttpRequest();
+	try {
 		rootxhr.onreadystatechange = rootResponse;
 		rootxhr.onerror = handleError;
 		rootxhr.open('GET', rootUrl + 'api/json', true);
@@ -170,112 +171,112 @@ try {
 		rootxhr.send();
 		//console.log("rootxhr sent");
 	} catch (e) {
-	console.log("error");
+		console.log("error");
 	}
-
+	
 }
 
 function rootResponse() {
-//console.log("in rootResponse");
-if(rootxhr.readyState != 4)
-return;
-//console.log(rootxhr.status);
-//console.log(rootxhr.responseText);
-if(rootxhr.status == 200 && rootxhr.responseText) {
-var response = JSON.parse(rootxhr.responseText);
-if (response.jobs==null)
-;
-//console.log("not root page");
-else {
-	activJobs = [];			// re initialize on every reload
-	activJobCount = 0;
-for(x in response.jobs) {
-//console.log(response.jobs[x].name);
-checkForBuilds(response.jobs[x]);
-}
-
-
-}
-console.log(activJobCount+": active jobs");
-if (activJobCount>0)
-setTimeout("testRoot()",1000);
-}
-
- 
-//setTimeout("rootResponse()",100);
+	
+	if (rootxhr.readyState != 4)
+		return;
+	
+	if (rootxhr.status == 200 && rootxhr.responseText) {
+		var response = JSON.parse(rootxhr.responseText);
+		if (response.jobs == null);
+		else {
+		
+			//activJobs = [];			// re initialize on every reload
+			//activJobCount = 0;
+			for (x in response.jobs) {
+				checkForBuilds(response.jobs[x]);
+			}
+			
+		}
+		console.log(activJobCount + ": active jobs");
+		if (activJobCount > 0)
+			setTimeout("testRoot()", 1000);
+	}
+	
 }
 
 function handleError() {
-console.log("xmlHTTPReq error");
+	console.log("xmlHTTPReq error");
 }
-
 
 function checkForBuilds(job) {
-var active=/anime/;
-//console.log("checking for build :" + job.name);
-if (active.test(job.color)) {
-var abc = checkStartStop(job,true);
-console.log(abc);
-if (abc=="notStarted")
-{
-activJobCount++;
-console.log(job.name + " added to list");
-}
-//console.log(job.name +" is active");
-}
-else{
-if (checkStartStop(job,false)=="stop")
-activJobCount--;
-//console.log(job.name +" is inactive");
-}
-//console.log(activJobCount);
+	var active = /anime/;
+	
+	if (active.test(job.color)) {
+		var abc = "";
+		abc = checkStartStop(job, true);
+		if (abc == "notStarted") {
+			//var notification = webkitNotifications.createNotification('DA.png', 'Building', 'Build Started, Job :' + job.name);
+			//notification.show();
+			//console.log("incrementing coz : " +abc);
+			activJobCount++;
+			
+		}
+		
+	} else {
+		if (checkStartStop(job, false) == "stop") {
+			activJobCount--;
+			var notification = webkitNotifications.createNotification('DA.png', 'Building', 'Build Finished, Job :' + job.name);
+			notification.show();
+			
+		}
+	}
 }
 
-function checkStartStop(job,building) { 
-var rstr;
-if (building) {
-
-console.log(job.name + " is building");
-
-if(activJobs.length>0) {
-for (x in activJobs) {
-//console.log(x);
-if (job.name==activJobs[x])
-{
-console.log(job.name +" in list");
-rstr = "Started";
+function checkStartStop(job, building) {
+	var rstr=null;
+	var present=false;
+	if (building) {
+		
+		if (activJobs.length > 0) {
+			for (x in activJobs) {
+				
+				if (job.name == activJobs[x]) {
+					//console.log("job in list :" +job.name);
+					rstr = "Started";
+					present=true;
+					//return rstr;
+				} 
+				}
+			if(present)
+			return rstr;
+			if (!present) {			
+					//console.log("bug");
+					activJobs.push(job.name);
+					rstr = "notStarted";
+					return rstr;
+			}	
+			
+		} else if (activJobs.length == 0) {
+			//console.log("bug1");
+			//console.log(activJobs.length);
+			activJobs.push(job.name);
+			rstr = "notStarted";
+			return rstr;
+		}
+	} else if (!building) {
+		
+		for (x in activJobs) {
+			if (job.name == activJobs[x]) {
+				
+				activJobs.splice(x, 1);
+				rstr = "stop";
+				return rstr;
+			}
+		}
+	}
+	/*for (x in activJobs)
+	console.log(x);
+	 */
+	
+	return rstr;
 }
-else {
-console.log(job.name +" now added");
-activJobs.push(job.name);
-rstr = "notStarted";
-}
-}
-}
-else if (activJobs.length == 0)
-{
-console.log(job.name +" now added");
-activJobs.push(job.name);
-rstr = "notStarted";
-}
-}
-else if (!building) {
-console.log(job.name+ "not building");
-for (x in activJobs) {
-//console.log(activJobs[x]);
-if (job.name==activJobs[x]) {
-activJobs.splice(x,1);
-rstr = "stop";
-}
-}
-}
-/*for (x in activJobs)
-console.log(x);
-*/
-console.log("returs string: "+rstr);
-return rstr;
-}
-// Listen for the content script to send a message to the background page.
+ // Listen for the content script to send a message to the background page.
 chrome.extension.onRequest.addListener(onRequest);
      </script>
   </head>
