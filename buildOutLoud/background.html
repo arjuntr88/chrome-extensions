@@ -31,16 +31,7 @@ function onRequest(request, sender, sendResponse) {
 			path : "DA.png",
 			tabId : sender.tab.id
 		});
-	
-/*	if (cons.test(sender.tab.url)) {
-		request1 = null
-			job = null;
-		//console.log("sender.tab.url "+ sender.tab.url);
-		url = sender.tab.url;
-		buildStarted = 0;
-		buildFin = 0;
-		testBuild();
-	}*/
+
 	rootUrl=sender.tab.url; //rootUrl variable to store url of the tab
 	activJobs = [];
 	activJobCount = 0;
@@ -49,109 +40,7 @@ function onRequest(request, sender, sendResponse) {
 	sendResponse({});
 }
 
-/*function getUrl(Url) {
-	
-	var pos = Url.lastIndexOf("console");
-	
-	if (pos == -1)
-		return "";
-	else
-			return Url.slice(0, pos);
-	
-}
 
-function testBuild() {
-	//console.log("URL: " +url);
-	if (request1 == null) {
-		//console.log("testbuild req=false|null");
-		
-		doRequest();
-		
-		//sleep(5000);
-	}
-	if (request1 == "success") {
-		//console.log("req==true");
-		//console.log("testbuild req=true");
-		
-		var notification = webkitNotifications.createNotification('DA.png', 'success', 'Build Successfull, Job :' + job);
-		notification.show();
-	}
-	if (request1 == "failure") {
-		var notification = webkitNotifications.createNotification('DA.png', 'failure', 'Build Failed, Job :' + job);
-		notification.show();
-	}
-	if (request1 == "aborted") {
-		var notification = webkitNotifications.createNotification('DA.png', 'aborted', 'Build Aborted, Job :' + job);
-		notification.show();
-	}
-	
-	if (request1 == "building") {
-		if (buildStarted < 1) {
-			//console.log("testbuild req=building");
-			var notification = webkitNotifications.createNotification('DA.png', 'Building', 'Build Started, Job :' + job);
-			notification.show();
-			buildStarted++;
-		}
-		doRequest();
-	}
-	
-}
-
-function doRequest() {
-	var tabUrl = getUrl(url);
-	//console.log("tab: "+tabUrl);
-	
-	var auth = null;
-	if (xhreq) {
-		xhreq.abort();
-	}
-	xhreq = new XMLHttpRequest();
-	
-	try {
-		xhreq.onreadystatechange = checkResponse;
-		//xhreq.onerror = handleError;
-		xhreq.open('GET', tabUrl + 'api/json', true);
-		if (typeof auth == 'string') {
-			xhreq.setRequestHeader('Authorization', 'Basic ' + auth);
-		}
-		
-		xhreq.send();
-	} catch (e) {}
-	
-	//request1=true;
-}
-
-function checkResponse() {
-	if (xhreq.readyState != 4)
-		return;
-	if (xhreq.status == 200 && xhreq.responseText) {
-		var response = JSON.parse(xhreq.responseText);
-		//console.log("JSON.parse done");
-		//console.log("building :"+response.building);
-		//console.log("result :"+response.result);
-		if (!response.building && response.result == "SUCCESS") {
-			
-			//console.log("build success");
-			request1 = "success";
-			//return true;
-			//buildFin++;
-		} else if (!response.building && response.result == "FAILURE") {
-			//console.log("build fail");
-			request1 = "failure";
-		} else if (response.building) {
-			//console.log("building");
-			request1 = "building";
-		}
-		else if (!response.building && response.result == "ABORTED") {
-			request1 = "aborted";
-		}
-	} else {}
-	console.log("chkresponse");
-	job = response.fullDisplayName;
-	setTimeout("testBuild()", 1000);
-	return;
-	
-}*/
 var rootxhr;
 function testRoot() {
 	//console.log("in testRoot");
@@ -185,7 +74,7 @@ function rootResponse() {
 		var response = JSON.parse(rootxhr.responseText);
 		if (response.jobs == null);
 		else {
-		
+			
 			//activJobs = [];			// re initialize on every reload
 			//activJobCount = 0;
 			for (x in response.jobs) {
@@ -229,8 +118,8 @@ function checkForBuilds(job) {
 }
 
 function checkStartStop(job, building) {
-	var rstr=null;
-	var present=false;
+	var rstr = null;
+	var present = false;
 	if (building) {
 		
 		if (activJobs.length > 0) {
@@ -239,18 +128,18 @@ function checkStartStop(job, building) {
 				if (job.name == activJobs[x]) {
 					//console.log("job in list :" +job.name);
 					rstr = "Started";
-					present=true;
+					present = true;
 					//return rstr;
-				} 
 				}
-			if(present)
-			return rstr;
-			if (!present) {			
-					//console.log("bug");
-					activJobs.push(job.name);
-					rstr = "notStarted";
-					return rstr;
-			}	
+			}
+			if (present)
+				return rstr;
+			if (!present) {
+				//console.log("bug");
+				activJobs.push(job.name);
+				rstr = "notStarted";
+				return rstr;
+			}
 			
 		} else if (activJobs.length == 0) {
 			//console.log("bug1");
@@ -276,6 +165,7 @@ function checkStartStop(job, building) {
 	
 	return rstr;
 }
+ 
  // Listen for the content script to send a message to the background page.
 chrome.extension.onRequest.addListener(onRequest);
      </script>
