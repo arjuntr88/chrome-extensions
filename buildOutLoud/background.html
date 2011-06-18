@@ -17,8 +17,11 @@ var url;
 var buildStarted;
 var job;
 var rootUrl;
+var rootxhr;
 var activJobs = [];
 var activJobCount = 0;
+var reqSent;
+var tabId;
 // Called when a message is passed.  We assume that the content script
 // wants to show the page action.
 function onRequest(request, sender, sendResponse) {
@@ -31,17 +34,21 @@ function onRequest(request, sender, sendResponse) {
 			path : "DA.png",
 			tabId : sender.tab.id
 		});
-
-	rootUrl=sender.tab.url; //rootUrl variable to store url of the tab
-	activJobs = [];
-	activJobCount = 0;
-	testRoot();	//check whether it is infact root hudson page
 	
+	if(request=="root") {	
+	rootUrl=sender.tab.url; //rootUrl variable to store url of the tab
+	testRoot();	//check whether it is infact root hudson page
+	}
+	else if(reqSent==true)
+	{
+	testRoot();
+	}
+	tabId=sender.tab.id;
 	sendResponse({});
 }
 
 
-var rootxhr;
+
 function testRoot() {
 	//console.log("in testRoot");
 	var auth = null;
@@ -62,7 +69,7 @@ function testRoot() {
 	} catch (e) {
 		console.log("error");
 	}
-	
+	reqSent=true;
 }
 
 function rootResponse() {
@@ -74,7 +81,6 @@ function rootResponse() {
 		var response = JSON.parse(rootxhr.responseText);
 		if (response.jobs == null);
 		else {
-			
 			//activJobs = [];			// re initialize on every reload
 			//activJobCount = 0;
 			for (x in response.jobs) {
@@ -165,9 +171,21 @@ function checkStartStop(job, building) {
 	
 	return rstr;
 }
- 
+function onRemoved(tab,removeInfo) {
+//console.log("in cleanup, rootxhr:"+rootxhr+"activJobs:"+activJobs+"activJobCount:"+activJobCount+"rootUrl:"+rootUrl);
+if(tab==tabId) {
+if(rootxhr!=null) 
+rootxhr.abort();
+activJobs = [];
+activJobCount = 0;
+rootUrl="";
+
+}
+}
+
  // Listen for the content script to send a message to the background page.
 chrome.extension.onRequest.addListener(onRequest);
+chrome.tabs.onRemoved.addListener(onRemoved);
      </script>
   </head>
 </html>

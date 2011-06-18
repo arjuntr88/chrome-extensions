@@ -4,6 +4,7 @@
  * LICENSE file.
  */
 var regex = /hudson/;
+var title = /Dashboard/;
 function testForHudson() {
 	var header = document.getElementById('header');
 	if (header == null)
@@ -20,7 +21,11 @@ function testForHudson() {
 
 // Test the text of the body element against our regular expression.
 if (testForHudson()) {
-	// The regular expression produced a match, so notify the background page.
+	if(title.test(document.title))
+	{
+	response="root";
+	chrome.extension.sendRequest(response);
+	}// The regular expression produced a match, so notify the background page.
 	chrome.extension.sendRequest({}, function (response) {});
 	
 } else {
