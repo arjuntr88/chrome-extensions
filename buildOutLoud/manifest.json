@@ -6,8 +6,10 @@
   "page_action" :
   {
     "default_icon" : "DA-19.png",
-    "default_title" : "Hudson b&r extension"
+    "default_title" : "Hudson build notifier",
+	"default_popup" : "popup.html"
   },
+  "minimum_chrome_version":"5.0.308.0",
   "content_scripts" : [
     {
       "matches" : [

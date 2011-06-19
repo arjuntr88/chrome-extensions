@@ -3,7 +3,8 @@
  * source code is governed by a BSD-style license that can be found in the
  * LICENSE file.
  */
-var regex = /hudson/;
+var hudson = /hudson/;
+var jenkins = /Jenkins/;
 var title = /Dashboard/;
 function testForHudson() {
 	var header = document.getElementById('header');
@@ -11,7 +12,7 @@ function testForHudson() {
 		return false;
 	for (i = 0; header.rows[i] != null; i++) {
 		for (j = 0; header.rows[i].cells[j] != null; j++) {
-			if (regex.test(header.rows[i].cells[j].innerHTML))
+			if (hudson.test(header.rows[i].cells[j].innerHTML) || jenkins.test(header.rows[i].cells[j].innerHTML))
 				return true;
 		}
 	}
