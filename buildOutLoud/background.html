@@ -101,7 +101,7 @@ function checkForBuilds(job) {
 		var abc = "";
 		abc = checkStartStop(job, true);
 		if (abc == "notStarted") {
-			//var notification = webkitNotifications.createNotification('DA.png', 'Building', 'Build Started, Job :' + job.name);
+			//var notification = webkitNotifications.createNotification('BoL.png', 'Building', 'Build Started, Job :' + job.name);
 			//notification.show();
 			//console.log("incrementing coz : " +abc);
 			activJobCount++;
@@ -111,7 +111,7 @@ function checkForBuilds(job) {
 	} else {
 		if (checkStartStop(job, false) == "stop") {
 			activJobCount--;
-			var notification = webkitNotifications.createNotification('DA.png', 'Building', 'Build Finished, Job :' + job.name);
+			var notification = webkitNotifications.createNotification('BoL.png', 'Building', 'Build Finished, Job :' + job.name);
 			notification.show();
 			
 		}
