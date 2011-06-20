@@ -1,11 +1,11 @@
 {
   "name" : "Build out Loud",
-  "version" : "1.1",
+  "version" : "1.2",
   "description" : "shows notification for hudson builds when a hudson page is opened",
   "background_page" : "background.html",
   "page_action" :
   {
-    "default_icon" : "DA-19.png",
+    "default_icon" : "BoL-19.png",
     "default_title" : "Hudson build notifier",
 	"default_popup" : "popup.html"
   },
@@ -22,8 +22,8 @@
     }
   ],
   "icons" : {
-    "48" : "DA-19.png",
-    "128" : "DA-128.png"
+    "48" : "BoL-19.png",
+    "128" : "BoL-128.png"
   },
   "permissions": ["tabs", "notifications", "http://*/*", "https://*/*","idle"]
 }
